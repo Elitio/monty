@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 		printf("USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
-	fd = open(argv[1], O_RDONLY);
+	fd = fopen(argv[1], "r");
 	if (fd == NULL)
 	{
 		printf("Error: Can't open file %s\n", argv[1]);
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 	{
 		free(buffer);
 	}
-	close(fd);
+	fclose(fd);
 
 	return (0);
 }

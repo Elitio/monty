@@ -44,5 +44,8 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+/* These are created functions */
+int if_number(char *s);
+void push(stack_t **stack, unsigned int given_num);
 
 #endif
