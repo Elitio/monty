@@ -45,6 +45,7 @@ typedef struct instruction_s
 } instruction_t;
 
 /* These are created functions */
+void parse(char *data);
 int if_number(char *s);
 void push(stack_t **stack, unsigned int given_num);
 void pall(stack_t **stack, unsigned int  l_numb);
