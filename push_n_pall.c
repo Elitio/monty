@@ -15,7 +15,7 @@ int if_number(char *s)
 	{
 		if (!(isdigit(s[count])))
 		{
-			return (-1)
+			return (-1);
 		}
 		count++;
 	}
@@ -32,26 +32,47 @@ int if_number(char *s)
 
 void push(stack_t **stack, unsigned int given_num)
 {
-	stack_t *1_node;
+	stack_t *node_1;
 	int status;
 
-	1_node = malloc(sizeof(stack_t));
-	if(!1_node)
+	node_1 = malloc(sizeof(stack_t));
+	if(!node_1)
 	{
-		dprintf(2, "Error: malloc failed\n", given_num);
-		exite(EXIT_FAILURE);
+		dprintf(2, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
 	}
 	status = atoi(monty.arg);
-	1_node->n = status;
-	1_node->next = NULL;
-	1_node->prev = NULL;
+	node_1->n = status;
+	node_1->next = NULL;
+	node_1->prev = NULL;
 
 	if (!(*stack))
 	{
-		(*stack) = 1_node;
+		(*stack) = node_1;
 		return;
 	}
-	1_node->next = (*stack);
-	(*stack)->prev = 1_node;
-	(*stack) = 1_node;
+	node_1->next = (*stack);
+	(*stack)->prev = node_1;
+	(*stack) = node_1;
+}
+
+/**
+ * print_pall - Will print all the values on the stack, starting from the top
+ *
+ * @stack: Pointer to the pointer of the stack.
+ * @given_num: The number passed to the element of the stack.
+ * Return: Will return void.
+ */
+
+void pall(stack_t **stack, unsigned int  given_num)
+{
+	stack_t *tmp;
+	(void) given_num;
+
+	tmp = *stack;
+	while (tmp)
+	{
+		printf("%d\n", tmp->n);
+		tmp = tmp->next;
+	}
 }

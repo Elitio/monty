@@ -47,5 +47,6 @@ typedef struct instruction_s
 /* These are created functions */
 int if_number(char *s);
 void push(stack_t **stack, unsigned int given_num);
+void pall(stack_t **stack, unsigned int  l_numb);
 
 #endif
