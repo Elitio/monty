@@ -1,5 +1,20 @@
 #include "monty.h"
 
+/**
+ * parse - function to parse lines from file
+ * @data: line to parse
+ */
+
+void parse(char *data)
+{
+    char *cmd[2];
+
+    cmd[0] = strtok(data, " ");
+    cmd[1] = strtok(NULL, " ");
+    printf("%s", cmd[0]);
+    printf("%s", cmd[1]);
+}
+
 int main(int argc, char *argv[])
 {
 	FILE *fd;
@@ -21,7 +36,7 @@ int main(int argc, char *argv[])
 
 	for (num_line = 1; getline(&buffer, &n, fd) != EOF; num_line++)
 	{
-		printf("%s\n", buffer);
+		parse(buffer);
 	}
 	if (buffer != NULL)
 	{
