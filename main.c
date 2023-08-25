@@ -2,7 +2,7 @@
 
 stack_u *create_node(int num)
 {
-	stack_u **temp;
+	stack_u *temp;
 
 	temp = malloc(sizeof(stack_u));
 	if(!temp)
@@ -11,10 +11,10 @@ stack_u *create_node(int num)
 		exit(EXIT_FAILURE);
 	}
 
-	(*temp)->n = num;
-	(*temp)->next = NULL;
-	(*temp)->prev = NULL;
-	return (*temp);
+	temp->n = num;
+	temp->next = NULL;
+	temp->prev = NULL;
+	return (temp);
 }
 
 /**
