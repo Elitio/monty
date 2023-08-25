@@ -2,9 +2,9 @@
 
 stack_u *create_node(int num)
 {
-	stack_u *temp;
+	stack_t *temp;
 
-	temp = malloc(sizeof(stack_u));
+	temp = malloc(sizeof(stack_t));
 	if(!temp)
 	{
 		dprintf(2, "Error: malloc failed\n");
@@ -26,18 +26,18 @@ stack_u *create_node(int num)
 void parse(char *data, unsigned int line_num)
 {
 	char *cmd[2];
-	stack_u **new_node;
+	stack_t *new_node;
 
 	cmd[0] = strtok(data, " ");
 	cmd[1] = strtok(NULL, " ");
 	printf("%s %s\n", cmd[0], cmd[1]);
-	new_node = malloc(sizeof(stack_u));
+	new_node = malloc(sizeof(stack_t));
 	if(!new_node)
 	{
 		dprintf(2, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
-	*new_node = create_node(atoi(cmd[1]));
+	new_node = create_node(atoi(cmd[1]));
 }
 
 int main(int argc, char *argv[])
