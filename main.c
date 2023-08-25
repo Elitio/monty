@@ -1,73 +1,77 @@
 #include "monty.h"
 
-stack_u *create_node(int num)
-{
-	stack_t *temp;
+stack_t *create_node(int num){
+    stack_t *temp;
 
-	temp = malloc(sizeof(stack_t));
-	if(!temp)
-	{
-		dprintf(2, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
+    temp = malloc(sizeof(stack_t));
+    if(!temp)
+    {
+            dprintf(2, "Error: malloc failed\n");
+            exit(EXIT_FAILURE);
+    }
 
-	temp->n = num;
-	temp->next = NULL;
-	temp->prev = NULL;
-	return (temp);
+    temp->n = num;
+    temp->next = NULL;
+    temp->prev = NULL;
+    return (temp);
 }
 
-/**
- * parse - function to parse lines from file
- * @data: line to parse
- * @line_num: line number
- */
+void stack_func(char **type, unsigned int count)
+{
+    int i;
+    stack_t **new_node;
+    instruction_t actions[] = {
+        {"push", push_action}
+    };
+
+    new_node = malloc(sizeof(stack_t));
+    if(!new_node)
+    {
+            dprintf(2, "Error: malloc failed\n");
+            exit(EXIT_FAILURE);
+    }
+    (*new_node) = create_node(atoi(type[1]));
+
+    for (i = 0; actions[i].opcode == NULL; i++)
+    {
+        if (actions[i].opcode == type[0])
+        {
+            actions[i].f(new_node, count);
+        }
+    }
+}
 
 void parse(char *data, unsigned int line_num)
 {
-	char *cmd[2];
-	stack_t *new_node;
+    char *cmd[2];
 
-	cmd[0] = strtok(data, " ");
-	cmd[1] = strtok(NULL, " ");
-	printf("%s %s\n", cmd[0], cmd[1]);
-	new_node = malloc(sizeof(stack_t));
-	if(!new_node)
-	{
-		dprintf(2, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
-	new_node = create_node(atoi(cmd[1]));
+    cmd[0] = strtok(data, " ");
+    cmd[1] = strtok(NULL, " ");
+    stack_func(cmd, line_num);
 }
 
 int main(int argc, char *argv[])
 {
-	FILE *fd;
-	char *buffer = NULL;
-	int num_line;
-	size_t n;
-
-	if (argc != 2)
-	{
-		printf("USAGE: monty file\n");
-		exit(EXIT_FAILURE);
-	}
-	fd = fopen(argv[1], "r");
-	if (fd == NULL)
-	{
-		printf("Error: Can't open file %s\n", argv[1]);
-		exit(EXIT_FAILURE);
-	}
-
-	for (num_line = 1; getline(&buffer, &n, fd) != EOF; num_line++)
-	{
-		parse(buffer, num_line);
-	}
-	if (buffer != NULL)
-	{
-		free(buffer);
-	}
-	fclose(fd);
-
-	return (0);
+        FILE *fd;
+        char *buffer = NULL;
+        int num_line;
+        size_t n;        
+        if (argc != 2)
+        {
+                printf("USAGE: monty file\n");
+                exit(EXIT_FAILURE);
+        }
+        fd = fopen(argv[1], "r");
+        if (fd == NULL)
+        {
+                printf("Error: Can't open file %s\n", argv[1]);
+                exit(EXIT_FAILURE);
+        }        
+        for (num_line = 1; getline(&buffer, &n, fd) != EOF; num_line++)
+        {
+            parse(buffer, num_line);
+        }
+        free(buffer);        
+        return (0);
 }
+

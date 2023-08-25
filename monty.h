@@ -44,10 +44,15 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+extern stack_t *head;
+
 /* These are created functions */
 void parse(char *data);
 int if_number(char *s);
 void push(stack_t **stack, unsigned int given_num);
 void pall(stack_t **stack, unsigned int  l_numb);
+
+void push_action(stack_u **stack, unsigned int line_number);
+void pall_action(stack_u **stack, unsigned int line_number);
 
 #endif
