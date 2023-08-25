@@ -1,18 +1,43 @@
 #include "monty.h"
 
+stack_u *create_node(int num)
+{
+	stack_u **temp;
+
+	temp = malloc(sizeof(stack_u));
+	if(!temp)
+	{
+		dprintf(2, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
+
+	(*temp)->n = num;
+	(*temp)->next = NULL;
+	(*temp)->prev = NULL;
+	return (*temp);
+}
+
 /**
  * parse - function to parse lines from file
  * @data: line to parse
+ * @line_num: line number
  */
 
-void parse(char *data)
+void parse(char *data, unsigned int line_num)
 {
-    char *cmd[2];
+	char *cmd[2];
+	stack_u **new_node;
 
-    cmd[0] = strtok(data, " ");
-    cmd[1] = strtok(NULL, " ");
-    printf("%s", cmd[0]);
-    printf("%s", cmd[1]);
+	cmd[0] = strtok(data, " ");
+	cmd[1] = strtok(NULL, " ");
+	printf("%s %s\n", cmd[0], cmd[1]);
+	new_node = malloc(sizeof(stack_u));
+	if(!new_node)
+	{
+		dprintf(2, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
+	*new_node = create_node(atoi(cmd[1]));
 }
 
 int main(int argc, char *argv[])
@@ -36,7 +61,7 @@ int main(int argc, char *argv[])
 
 	for (num_line = 1; getline(&buffer, &n, fd) != EOF; num_line++)
 	{
-		parse(buffer);
+		parse(buffer, num_line);
 	}
 	if (buffer != NULL)
 	{
