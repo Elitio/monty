@@ -21,16 +21,19 @@ void stack_func(char **type, unsigned int count)
     int i;
     stack_t **new_node;
     instruction_t actions[] = {
-        {"push", push_action}
+        {"push", push_action}, ["pall", pall_action]
     };
 
-    new_node = malloc(sizeof(stack_t));
-    if(!new_node)
+    if (type[1])
     {
+	    new_node = malloc(sizeof(stack_t));
+	    if(!new_node)
+	    {
             dprintf(2, "Error: malloc failed\n");
             exit(EXIT_FAILURE);
-    }
+	    }
     (*new_node) = create_node(atoi(type[1]));
+    }
 
     for (i = 0; actions[i].opcode == NULL; i++)
     {
