@@ -21,7 +21,7 @@ void stack_func(char **type, unsigned int count)
     int i;
     stack_t **new_node;
     instruction_t actions[] = {
-        {"push", push_action}, ["pall", pall_action]
+        {"push", push_action}, {"pall", pall_action}
     };
 
     if (type[1])
@@ -34,13 +34,22 @@ void stack_func(char **type, unsigned int count)
 	    }
     (*new_node) = create_node(atoi(type[1]));
     }
-
-    for (i = 0; actions[i].opcode == NULL; i++)
+    else if (strcmp(type[0], "push") == 0)
     {
-        if (actions[i].opcode == type[0])
+	    printf("L%d: Usage: push integer\n", count);
+	    exit(EXIT_FAILURE);
+    }
+
+    i = 0;
+
+    while (actions[i].opcode)
+    {
+        if (strcmp(actions[i].opcode, type[0]) == 0)
         {
             actions[i].f(new_node, count);
+	    break;
         }
+	i++;
     }
 }
 

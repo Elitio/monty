@@ -1,5 +1,5 @@
 #include "monty.h"
-stack_u *head = NULL;
+stack_t *head = NULL;
 
 void push_action(stack_t **stack, unsigned int line_number){ 
         stack_t *tmp;
