@@ -1,5 +1,5 @@
 #include "monty.h"
-stack_u *head = NULL;
+stack_t *head = NULL;
 
 /**
  * create_node - function to create a node
@@ -33,10 +33,11 @@ stack_t *create_node(int num)
 void stack_func(char **type, unsigned int count)
 {
 	int i;
-	stack_t **new_node;
+	stack_t **new_node = NULL;
 	instruction_t actions[] = {
 		{"push", push_action}, {"pall", pall_action}
 	};
+
 
 	if (type[1])
 	{
@@ -47,6 +48,11 @@ void stack_func(char **type, unsigned int count)
 			exit(EXIT_FAILURE);
 		}
 		(*new_node) = create_node(atoi(type[1]));
+	}
+	else if (strcmp(type[0], "push") == 0)
+	{
+		printf("L%d: usage: push integer\n", count);
+		exit(EXIT_FAILURE);
 	}
 
 	i = 0;
@@ -108,4 +114,3 @@ int main(int argc, char *argv[])
 	free(buffer);
 	return (0);
 }
-

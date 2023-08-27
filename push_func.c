@@ -1,27 +1,33 @@
 #include "monty.h"
-stack_u *head = NULL;
 
-void push_action(stack_t **stack, unsigned int line_number){ 
-        stack_t *tmp;
+/**
+ * push_action - adds an element to a stack
+ * @stack: node to add
+ * @line_number: line number being executed
+ */
 
-        (void) line_number;
+void push_action(stack_t **stack, unsigned int line_number)
+{
+	stack_t *tmp;
 
-        printf("Push function\n");
-        if (head == NULL){
-            printf("First push\n");
-            head = (*stack);
-        }
-        else
-        {
-		    tmp = head;
-		    if (tmp->next != NULL){
-                while (tmp->next)
-		        {
-			        tmp = tmp->next;
-		        }
-            }
+	(void) line_number;
+	if (head == NULL)
+	{
+		head = (*stack);
+	}
+	else
+	{
+		tmp = head;
+		if (tmp->next != NULL)
+		{
+			while (tmp->next)
+			{
+				tmp = tmp->next;
+			}
+		}
 
-		    tmp->next = *stack;
-		    (*stack)->prev = tmp;
-	    }
+		tmp->next = *stack;
+		(*stack)->prev = tmp;
+	}
+	printf("Push successful\n");
 }
