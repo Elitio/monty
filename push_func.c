@@ -29,5 +29,4 @@ void push_action(stack_t **stack, unsigned int line_number)
 		tmp->next = *stack;
 		(*stack)->prev = tmp;
 	}
-	printf("Push successful\n");
 }

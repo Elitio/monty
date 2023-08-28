@@ -35,7 +35,8 @@ void stack_func(char **type, unsigned int count)
 	int i;
 	stack_t **new_node = NULL;
 	instruction_t actions[] = {
-		{"push", push_action}, {"pall", pall_action}
+		{"push", push_action}, {"pall", pall_action},
+		{"pint", pint_action}
 	};
 
 

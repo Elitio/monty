@@ -49,5 +49,6 @@ extern stack_t *head;
 /* These are created functions */
 void push_action(stack_t **stack, unsigned int line_number);
 void pall_action(stack_t **stack, unsigned int line_number);
+void pint_action(stack_t **stack, unsigned int line_number);
 
 #endif
