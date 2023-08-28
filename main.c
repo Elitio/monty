@@ -26,45 +26,37 @@ stack_t *create_node(int num)
 
 /**
  * stack_func - function to execute opcodes
+ * @node: node to add to stack
  * @type: array of strings containing args
  * @count: number of line from file being executed
  */
 
-void stack_func(char **type, unsigned int count)
+void stack_func(stack_t **node, char **type, unsigned int count)
 {
 	int i;
-	stack_t **new_node = NULL;
+	bool check = false;
 	instruction_t actions[] = {
 		{"push", push_action}, {"pall", pall_action},
 		{"pint", pint_action}
 	};
-
-
-	if (type[1])
-	{
-		new_node = malloc(sizeof(stack_t));
-		if (!new_node)
-		{
-			dprintf(2, "Error: malloc failed\n");
-			exit(EXIT_FAILURE);
-		}
-		(*new_node) = create_node(atoi(type[1]));
-	}
-	else if (strcmp(type[0], "push") == 0)
-	{
-		printf("L%d: usage: push integer\n", count);
-		exit(EXIT_FAILURE);
-	}
 
 	i = 0;
 	while (actions[i].opcode)
 	{
 		if (strcmp(actions[i].opcode, type[0]) == 0)
 		{
-			actions[i].f(new_node, count);
+			actions[i].f(node, count);
+			check = true;
 			break;
 		}
 		i++;
+		if (i >= 3)
+			break;
+	}
+	if (check == false)
+	{
+		printf("L%d: unknown instruction %s\n", count, type[0]);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -77,10 +69,28 @@ void stack_func(char **type, unsigned int count)
 void parse(char *data, unsigned int line_num)
 {
 	char *cmd[2];
+	stack_t **new_node = NULL;
 
 	cmd[0] = strtok(data, " ");
 	cmd[1] = strtok(NULL, " ");
-	stack_func(cmd, line_num);
+
+	if (cmd[1])
+	{
+		new_node = malloc(sizeof(stack_t));
+		if (!new_node)
+		{
+			dprintf(2, "Error: malloc failed\n");
+			exit(EXIT_FAILURE);
+		}
+		(*new_node) = create_node(atoi(cmd[1]));
+	}
+	else if (strcmp(cmd[0], "push") == 0)
+	{
+		printf("L%d: usage: push integer\n", line_num);
+		exit(EXIT_FAILURE);
+	}
+
+	stack_func(new_node, cmd, line_num);
 }
 
 /**

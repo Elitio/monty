@@ -21,8 +21,6 @@ void pint_action(stack_t **stack, unsigned int line_number)
 	}
 
 	for (i = 0; temp->next != NULL; i++)
-	{
 		temp = temp->next;
-	}
 	printf("%d\n", temp->n);
 }
